@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الصيغ الرياضية – Year 9</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b2340;--mu:#5b6482;--pr:#3b5bdb;--ok:#2b8a3e;--okb:#e6f6ea;--no:#c92a2a;--nob:#fdeaea;--hl:#fff3bf;--bd:#dfe3f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12162a;--card:#1c2240;--tx:#eef0fb;--mu:#a5acc9;--pr:#8ea2ff;--ok:#69db7c;--okb:#173a24;--no:#ff8787;--nob:#3f1d22;--hl:#4a4217;--bd:#323a63}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.8 "Segoe UI",Tahoma,Arial,sans-serif}
+.w{max-width:760px;margin:auto;padding:14px}
+h1{font-size:22px;margin:6px 0}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden;margin:8px 0 14px}
+.bar i{display:block;height:100%;background:var(--pr);width:0;transition:.3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:12px}
+.card h2{margin:0 0 8px;font-size:20px;color:var(--pr)}
+.m{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:Consolas,monospace;font-weight:700;background:var(--hl);padding:0 8px;border-radius:7px}
+.mb{direction:ltr;text-align:left;font-family:Consolas,monospace;font-weight:700;font-size:18px;background:var(--hl);padding:10px 14px;border-radius:10px;margin:8px 0;line-height:2}
+.en{direction:ltr;unicode-bidi:isolate;color:var(--pr);font-weight:700}
+.tip{background:var(--okb);border-inline-start:5px solid var(--ok);padding:10px 14px;border-radius:10px;margin:10px 0}
+.warn{background:var(--nob);border-inline-start:5px solid var(--no);padding:10px 14px;border-radius:10px;margin:10px 0}
+table{border-collapse:collapse;width:100%;direction:ltr;text-align:center}
+td,th{border:1px solid var(--bd);padding:6px}
+th{background:var(--hl)}
+.nav{display:flex;gap:10px;justify-content:space-between;margin:14px 0}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:9px 18px;border-radius:12px}
+button.p{background:var(--pr);color:#fff;border:0;font-weight:700}
+button:disabled{opacity:.4;cursor:default}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.opts button{direction:ltr;font-family:Consolas,monospace;font-weight:700}
+.opts button.ok{background:var(--okb);border-color:var(--ok)}
+.opts button.no{background:var(--nob);border-color:var(--no)}
+.fb{margin-top:8px;padding:8px 12px;border-radius:10px;display:none}
+.chk{border:2px dashed var(--bd);border-radius:12px;padding:12px;margin-top:12px}
+@media(max-width:480px){.opts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>📘 الصيغ الرياضية <span class="en">Deriving &amp; Using Formulae</span></h1>
+<div class="bar"><i id="pb"></i></div>
+<div id="app"></div>
+<div class="nav"><button id="pv">→ السابق</button><button id="nx" class="p">التالي ←</button></div>
+</div>
+<script>
+const M=s=>`<span class="m">${s}</span>`, B=s=>`<div class="mb">${s}</div>`;
+function chk(q,opts,a,exp){const id="c"+Math.random().toString(36).slice(2,7);
+return `<div class="chk" id="${id}"><b>✏️ جرّب بنفسك:</b> ${q}<div class="opts">${opts.map((o,i)=>`<button onclick="pick('${id}',${i},${a})">${o}</button>`).join("")}</div><div class="fb" id="${id}f">${exp}</div></div>`}
+function pick(id,i,a){const c=document.getElementById(id),bs=c.querySelectorAll("button"),f=document.getElementById(id+"f");
+bs.forEach((b,k)=>{b.disabled=true;if(k==a)b.classList.add("ok");else if(k==i)b.classList.add("no")});
+f.style.display="block";f.style.background=i==a?"var(--okb)":"var(--nob)";f.innerHTML=(i==a?"✅ أحسنت! ":"❌ ليس تمامًا. ")+f.innerHTML}
+
+const steps=[
+{t:"مرحبًا! ما هي الصيغة؟",h:`<p>الصيغة <span class="en">(Formula)</span> هي <b>وصفة رياضية</b> مكتوبة بالحروف. مثل وصفة الكعك: إذا عرفت المقادير تحصل على الناتج.</p>${B("F = m × a")}<p>هنا: <span class="en">F</span> = القوة، <span class="en">m</span> = الكتلة، <span class="en">a</span> = التسارع.</p><div class="tip">💡 في الاختبار ستواجه <b>3 أنواع</b> من الأسئلة فقط:<br>1️⃣ التعويض <span class="en">Substitution</span><br>2️⃣ جعل حرف موضوع القانون <span class="en">Make the subject</span><br>3️⃣ كتابة صيغة من مسألة كلامية <span class="en">Word problem</span><br>سنتدرّب على الثلاثة خطوة بخطوة.</div><div class="warn">⚠️ ملاحظة: الآلة الحاسبة <b>غير مسموحة</b>، لذلك ركّز على الحساب الذهني وإظهار الخطوات.</div>`},
+{t:"النوع 1: التعويض (Substitution)",h:`<p>التعويض = <b>استبدل الحرف برقمه</b> ثم احسب.</p><div class="tip"><b>الخطوات الثلاث:</b><br>① اكتب القانون.<br>② ضع الأرقام مكان الحروف (وبين الرقمين اكتب <span class="m">×</span> إن لم تكن هناك إشارة).<br>③ احسب وأضف الوحدة.</div><p><b>مثال:</b> <span class="m">F = ma</span> حيث <span class="m">m = 5</span> و <span class="m">a = 3</span></p>${B("F = m × a<br>F = 5 × 3<br>F = 15")}<p><b>مثال 2:</b> <span class="m">P = 2l + 2w</span> حيث <span class="m">l = 10</span> و <span class="m">w = 4</span> (المحيط <span class="en">Perimeter</span>)</p>${B("P = 2×10 + 2×4<br>P = 20 + 8 = 28 cm")}<div class="warn">⚠️ خطأ شائع: <span class="m">2l</span> تعني <b>2 × l</b> وليس 2 بجانب l (مثلًا 210). نفّذ الضرب قبل الجمع.</div>${chk("<span class='m'>A = s²</span> ، احسب A عندما <span class='m'>s = 6</span>",["12","36","66","26"],1,"s² تعني s × s = 6 × 6 = <b>36</b>. (وليس 6 × 2).")}`},
+{t:"التعويض في الكسور (درجة الحرارة)",h:`<p>القانون: <span class="m">F = 9C/5 + 32</span> (من سيلسيوس إلى فهرنهايت).</p><p><b>مثال:</b> C = 10</p>${B("F = (9 × 10) ÷ 5 + 32<br>F = 90 ÷ 5 + 32<br>F = 18 + 32 = 50")}<div class="tip">💡 اتبع ترتيب العمليات <span class="en">(BIDMAS)</span>: الضرب والقسمة <b>أولًا</b>، ثم الجمع والطرح.<br>نصيحة بدون حاسبة: اقسم على 5 قبل الضرب إن أمكن.</div>${chk("<span class='m'>F = 9C/5 + 32</span> ، احسب F عندما <span class='m'>C = 15</span>",["59","27","86","47"],0,"9×15 = 135 ، 135÷5 = 27 ، 27 + 32 = <b>59</b>.")}`},
+{t:"النوع 2: الأدوات – العمليات العكسية",h:`<p>لجعل حرف «موضوع القانون» <span class="en">(subject)</span> نريد أن يصبح <b>وحده</b> في طرف. نفكّ ما حوله بالعملية <b>العكسية</b>:</p><table><tr><th>العملية</th><th>عكسها</th></tr><tr><td>+ (جمع)</td><td>− (طرح)</td></tr><tr><td>× (ضرب)</td><td>÷ (قسمة)</td></tr><tr><td>x² (تربيع)</td><td>√ (جذر تربيعي)</td></tr><tr><td>x³ (تكعيب)</td><td>∛ (جذر تكعيبي)</td></tr></table><div class="tip">⚖️ <b>القاعدة الذهبية (الميزان):</b> ما تفعله في طرف افعله في الطرف الآخر تمامًا.<br>🧅 <b>الترتيب:</b> مثل تقشير البصلة، ابدأ بفك الجمع والطرح <b>أولًا</b>، ثم الضرب والقسمة.</div>`},
+{t:"جعل الحرف موضوعًا: خطوة بخطوة",h:`<p><b>مثال:</b> اجعل x موضوع القانون <span class="m">y = 3x + 5</span></p>${B("y = 3x + 5<br>y − 5 = 3x &nbsp;&nbsp;&larr; نطرح 5 من الطرفين<br>(y − 5) ÷ 3 = x &nbsp;&larr; نقسم الطرفين على 3<br><b>x = (y − 5)/3</b>")}<div class="warn">⚠️ لا تكتب <span class="m">y − 5/3</span>! يجب أن يُقسم <b>كل</b> (y − 5) على 3، لذلك نضع الأقواس.</div>${chk("اجعل q موضوعًا: <span class='m'>p = 4q − 7</span>",["q = (p − 7)/4","q = (p + 7)/4","q = 4(p + 7)","q = p/4 + 7"],1,"نضيف 7 للطرفين: p + 7 = 4q ثم نقسم على 4: <b>q = (p + 7)/4</b>.")}`},
+{t:"القوى: المربع والمكعب",h:`<p>إذا كان الحرف مربّعًا أو مكعّبًا، نستخدم الجذر.</p>${B("A = s²   &rarr;   s = √A<br>V = s³   &rarr;   s = ∛V")}<div class="tip">💡 الجذر التربيعي √ يعكس التربيع، والجذر التكعيبي ∛ يعكس التكعيب. السؤال يقول s &gt; 0 لذلك نأخذ الجذر الموجب فقط.</div>${chk("اجعل r موضوعًا: <span class='m'>V = r³</span>",["r = V/3","r = √V","r = ∛V","r = V³"],2,"عكس التكعيب هو الجذر التكعيبي: <b>r = ∛V</b>. (ليس القسمة على 3!)")}`},
+{t:"كسور مثل A = ½bh",h:`<p>الكسر <span class="m">½</span> يعني ÷2. عكسه: <b>×2</b>.</p><p><b>مثال:</b> اجعل b موضوعًا: <span class="m">x = ½ab</span></p>${B("x = ½ab<br>2x = ab &nbsp;&nbsp;&larr; نضرب الطرفين في 2<br><b>b = 2x/a</b> &nbsp;&larr; نقسم على a")}<p><b>الآن بنفس الفكرة</b> مع <span class="m">F = 9C/5 + 32</span>:</p>${B("F − 32 = 9C/5 &nbsp;&larr; نطرح 32<br>5(F − 32) = 9C &nbsp;&larr; نضرب في 5<br><b>C = 5(F − 32)/9</b> &nbsp;&larr; نقسم على 9")}${chk("اجعل h موضوعًا: <span class='m'>A = ½bh</span>",["h = A/(2b)","h = 2Ab","h = 2A/b","h = Ab/2"],2,"نضرب في 2: 2A = bh ثم نقسم على b: <b>h = 2A/b</b>.")}`},
+{t:"النوع 3: من الكلام إلى صيغة",h:`<p>أغلب المسائل الكلامية لها <b>نفس الشكل</b>:</p>${B("الإجمالي = (السعر لكل وحدة × العدد) + الرسم الثابت")}<p><b>مثال:</b> اشتراك هاتف: رسم ثابت AED 10 + AED 2 لكل GB.</p><p>① <b>الصيغة:</b></p>${B("C = 2g + 10")}<p>② <b>اجعل g موضوعًا:</b></p>${B("C − 10 = 2g<br><b>g = (C − 10)/2</b>")}<p>③ <b>أوجد g عندما C = 30:</b></p>${B("g = (30 − 10)/2 = 20/2 = 10")}<div class="tip">💡 الرسم الثابت <span class="en">(fixed fee)</span> لا يُضرب أبدًا. الذي يُضرب هو «لكل» <span class="en">(per)</span>.</div>${chk("مطعم: AED 8 رسم توصيل + AED 5 لكل وجبة. ما صيغة التكلفة T لـ n وجبة؟",["T = 8n + 5","T = 13n","T = 5n + 8","T = 5 + 8 + n"],2,"5 لكل وجبة تُضرب في n، والرسم الثابت 8 يُضاف: <b>T = 5n + 8</b>.")}`},
+{t:"جاهز للاختبار التجريبي؟ 🎯",h:`<p>ممتاز! أنهيت الشرح. الآن <b>12 سؤالًا</b> تحاكي أسئلة الاختبار.</p><div class="tip"><b>نصائح للدرجة الكاملة:</b><br>✔ اكتب القانون أولًا.<br>✔ اكتب كل خطوة (الدرجات على الخطوات).<br>✔ اعكس العمليات بالترتيب وطبّق نفس الشيء على الطرفين.<br>✔ ضع الوحدة (cm، AED) في الجواب النهائي.<br>✔ راجع الجواب بالتعويض.</div><p>في النهاية ستحصل على نتيجتك وتغذية راجعة لكل سؤال.</p>`},
+{t:"الاختبار التجريبي",quiz:true}
+];
+
+const Q=[
+{k:"sub",q:"<span class='m'>F = ma</span> ، أوجد F عندما <span class='m'>m = 7</span> و <span class='m'>a = 6</span>",o:["13","36","42","49"],a:2,e:"F = 7 × 6 = 42."},
+{k:"sub",q:"المحيط <span class='m'>P = 2l + 2w</span> ، أوجد P عندما <span class='m'>l = 11 cm</span> و <span class='m'>w = 6 cm</span>",o:["17 cm","34 cm","28 cm","66 cm"],a:1,e:"P = 2×11 + 2×6 = 22 + 12 = 34 cm. تذكّر: الضرب قبل الجمع."},
+{k:"sub",q:"<span class='m'>A = s²</span> ، أوجد A عندما <span class='m'>s = 9 cm</span>",o:["18 cm²","81 cm²","99 cm²","36 cm²"],a:1,e:"s² = s × s = 9 × 9 = 81 cm²."},
+{k:"sub",q:"<span class='m'>F = 9C/5 + 32</span> ، أوجد F عندما <span class='m'>C = 30</span>",o:["62","54","118","86"],a:3,e:"9×30 = 270 ، 270÷5 = 54 ، 54 + 32 = 86."},
+{k:"sub",q:"<span class='m'>V = s³</span> ، اجعل s موضوع القانون",o:["s = V/3","s = √V","s = ∛V","s = V³"],a:2,e:"عكس التكعيب هو الجذر التكعيبي: s = ∛V."},
+{k:"sub2",q:"اجعل t موضوعًا: <span class='m'>v = u + at</span>",o:["t = (v + u)/a","t = (v − u)/a","t = v − u/a","t = a(v − u)"],a:1,e:"v − u = at ثم نقسم الطرفين على a: t = (v − u)/a. الأقواس مهمة!"},
+{k:"sub2",q:"اجعل x موضوعًا: <span class='m'>y = 5x − 9</span>",o:["x = (y − 9)/5","x = (y + 9)/5","x = 5(y + 9)","x = y/5 + 9"],a:1,e:"نضيف 9 للطرفين: y + 9 = 5x ثم نقسم على 5: x = (y + 9)/5."},
+{k:"sub2",q:"اجعل h موضوعًا: <span class='m'>A = ½bh</span>",o:["h = A/(2b)","h = 2A/b","h = 2Ab","h = Ab/2"],a:1,e:"نضرب في 2: 2A = bh ثم نقسم على b: h = 2A/b."},
+{k:"sub2",q:"اجعل C موضوعًا: <span class='m'>F = 9C/5 + 32</span>",o:["C = 5(F − 32)/9","C = 9(F − 32)/5","C = 5F − 32/9","C = (F + 32)×5/9"],a:0,e:"نطرح 32، نضرب في 5، ثم نقسم على 9: C = 5(F − 32)/9."},
+{k:"word",q:"أجرة تاكسي: رسم ثابت AED 5 + AED 3 لكل كيلومتر. ما صيغة التكلفة C لمسافة d كم؟",o:["C = 5d + 3","C = 3d + 5","C = 8d","C = 3(d + 5)"],a:1,e:"3 لكل كم تُضرب في d، والرسم الثابت 5 يُضاف: C = 3d + 5."},
+{k:"word",q:"في تاكسي السؤال السابق (<span class='m'>C = 3d + 5</span>) أوجد d عندما <span class='m'>C = AED 35</span>",o:["12 km","10 km","13.3 km","8 km"],a:1,e:"d = (C − 5)/3 = (35 − 5)/3 = 30/3 = 10 km."},
+{k:"word",q:"نادٍ رياضي: AED 20 للانضمام + AED 12 لكل حصة. صيغة T لـ n حصة ثم أوجد n عندما T = 116 هي:",o:["T = 12n + 20 ، n = 8","T = 20n + 12 ، n = 8","T = 12n + 20 ، n = 9","T = 12n + 20 ، n = 11.6"],a:0,e:"T = 12n + 20 ⇒ n = (T − 20)/12 = (116 − 20)/12 = 96/12 = 8."}
+];
+const names={sub:"التعويض (Substitution)",sub2:"جعل الحرف موضوعًا (Subject)",word:"المسائل الكلامية (Word problems)"};
+const nameFix={sub:"التعويض والحساب (Substitution)",sub2:"جعل الحرف موضوعًا (Make the subject)",word:"المسائل الكلامية (Word problems)"};
+let cur=0,ans=[];
+const app=document.getElementById("app"),pv=document.getElementById("pv"),nx=document.getElementById("nx");
+function draw(){const s=steps[cur];document.getElementById("pb").style.width=((cur+1)/steps.length*100)+"%";
+pv.disabled=cur==0;nx.style.display=cur==steps.length-1?"none":"";
+if(s.quiz){ans=[];quiz();return}
+app.innerHTML=`<div class="card"><h2>${cur+1}/${steps.length} · ${s.t}</h2>${s.h}</div>`;window.scrollTo(0,0)}
+function quiz(){window.scrollTo(0,0);app.innerHTML=`<div class="card"><h2>🎯 ${Q.length} أسئلة – اختر الإجابة الصحيحة</h2><p>اضغط على إجابتك وستظهر التغذية الراجعة فورًا.</p></div>`+
+Q.map((x,i)=>`<div class="card"><b>${i+1}.</b> ${x.q}<div class="opts">${x.o.map((o,j)=>`<button onclick="ansQ(${i},${j},this)">${o}</button>`).join("")}</div><div class="fb" id="f${i}"></div></div>`).join("")+`<div class="card" id="res" style="display:none"></div>`}
+function ansQ(i,j,el){if(ans[i]!==undefined)return;ans[i]=j;const x=Q[i],bs=el.parentNode.querySelectorAll("button");
+bs.forEach((b,k)=>{b.disabled=true;if(k==x.a)b.classList.add("ok");else if(k==j)b.classList.add("no")});
+const f=document.getElementById("f"+i),ok=j==x.a;f.style.display="block";f.style.background=ok?"var(--okb)":"var(--nob)";
+f.innerHTML=(ok?"✅ إجابة صحيحة! ":"❌ إجابة خاطئة. ")+"<br>"+x.e;
+if(ans.filter(v=>v!==undefined).length==Q.length)result()}
+function result(){let sc=0,wrong={};Q.forEach((x,i)=>{if(ans[i]==x.a)sc++;else wrong[x.k]=(wrong[x.k]||0)+1});
+const p=Math.round(sc/Q.length*100);
+const msg=p>=90?"🏆 ممتاز! أنت جاهز لدرجة مميزة. حافظ على كتابة الخطوات.":p>=70?"👏 جيد جدًا! راجع النقاط أدناه وستصل للدرجة الكاملة.":p>=50?"💪 بداية جيدة. أعد قراءة الشرح للنقاط الضعيفة ثم أعد المحاولة.":"🌱 لا بأس! الرياضيات مهارة تُبنى بالتدريب. أعد الشرح خطوة بخطوة ثم حاول مجددًا.";
+const w=Object.keys(wrong).map(k=>`<li>${nameFix[k]} – أخطأت في ${wrong[k]} سؤال/أسئلة</li>`).join("");
+const r=document.getElementById("res");r.style.display="block";
+r.innerHTML=`<h2>📊 نتيجتك: ${sc} / ${Q.length} (${p}%)</h2><p>${msg}</p>${w?`<div class="warn"><b>أجزاء تحتاج مراجعة:</b><ul>${w}</ul></div>`:`<div class="tip">لا توجد أخطاء! 🎉</div>`}<button class="p" onclick="cur=0;draw()">🔁 إعادة الشرح</button> <button onclick="quiz()">إعادة الاختبار</button>`;
+r.scrollIntoView({behavior:"smooth"})}
+pv.onclick=()=>{if(cur>0){cur--;draw()}};nx.onclick=()=>{if(cur<steps.length-1){cur++;draw()}};
+draw();
+</script>
+</body>
+</html>
